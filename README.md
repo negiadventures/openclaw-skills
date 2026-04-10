@@ -1,6 +1,6 @@
 # openclaw-skills
 
-Reusable OpenClaw skills, organized using the OpenClaw skills guide pattern.
+Reusable OpenClaw skills, organized around the OpenClaw skills guide: <https://docs.openclaw.ai/tools/skills>.
 
 ## Skill layout
 
@@ -23,6 +23,8 @@ name: your-skill-name
 description: When to use this skill and what result it drives.
 ---
 ```
+
+Naming note: keep `name` stable and unique; prefer matching the folder name (for example, `my-new-skill`).
 
 Recommended body sections:
 
