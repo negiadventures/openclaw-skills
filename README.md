@@ -1,78 +1,73 @@
 # openclaw-skills
 
-This repository contains reusable OpenClaw skills.  
-Each skill is stored in its own folder and documented in a `SKILL.md` file.
+Reusable OpenClaw skills, organized around the OpenClaw skills guide: <https://docs.openclaw.ai/tools/skills>.
 
-## Project structure
+## Skill layout
+
+Each skill lives in its own top-level directory:
 
 ```text
 openclaw-skills/
-└── scheduled-repo-worker/
+└── <skill-name>/
     ├── SKILL.md
-    └── references/
-        ├── project-memory-templates.md
-        ├── question-flow.md
-        └── task-engine-notes.md
+    └── references/   (optional)
 ```
 
-## What a skill contains
+## `SKILL.md` requirements
 
-At minimum, a skill folder should include:
+Each skill must have a `SKILL.md` file with frontmatter:
 
-- `SKILL.md`: Frontmatter + full instructions for the skill.
-- `references/` (optional but recommended): Supporting templates, decision guides, and notes referenced by the skill.
+```yaml
+---
+name: your-skill-name
+description: When to use this skill and what result it drives.
+---
+```
 
-## How to create a new OpenClaw skill
+Naming note: keep `name` stable and unique; prefer matching the folder name (for example, `my-new-skill`).
 
-1. Create a new folder at the repository root (example: `my-new-skill/`).
-2. Add `my-new-skill/SKILL.md`.
-3. Add frontmatter at the top of `SKILL.md`:
-   - `name`: unique skill name
-   - `description`: when and why to use the skill
-4. Write clear sections in `SKILL.md`, for example:
-   - required outcome
-   - inputs to collect
-   - execution rules
-   - quality/safety rules
-   - final response format
-5. If the skill needs reusable guidance, create `my-new-skill/references/` and put helper docs there.
-6. In `SKILL.md`, reference those helper docs with relative paths.
-7. Keep instructions actionable, bounded, and focused on producing meaningful work.
+Recommended body sections:
 
-## Example: existing skill in this repo
+- required outcome
+- inputs to collect
+- execution rules / workflow
+- quality and safety rules
+- final response format
 
-The `scheduled-repo-worker` skill shows a complete structure:
+Guidance:
 
-- `scheduled-repo-worker/SKILL.md` defines modes (`project-memory`, `task-engine`, `hybrid`), required inputs, branch/PR policy, cron setup, and output format.
-- `scheduled-repo-worker/references/question-flow.md` helps collect missing user inputs.
-- `scheduled-repo-worker/references/project-memory-templates.md` provides templates for state files.
-- `scheduled-repo-worker/references/task-engine-notes.md` explains how to integrate with existing task systems.
+- Keep instructions explicit, bounded, and action-oriented.
+- Prefer checklists and clear decision rules over vague prose.
+- Define “done” so runs can terminate reliably.
+- Reference helper docs using relative paths.
 
-## How to use a skill in OpenClaw
+## Optional `references/` folder
 
-When running OpenClaw, invoke the skill by name and provide context the skill requires.
+Use `references/` for reusable artifacts:
 
-### Example 1: use the existing `scheduled-repo-worker` skill
+- templates
+- decision trees / question flows
+- integration notes
 
-Use this when you want cron-based repo automation with Discord summaries:
+Keep durable guidance in references and task-driving instructions in `SKILL.md`.
 
-- repo path or URL
-- project goal
-- mode (`project-memory`, `task-engine`, or `hybrid`)
-- timezone
-- normal run schedule
-- PR run schedule
-- Discord channel target
+## Add a new skill
 
-Expected result: OpenClaw prepares the right project state files/prompts and configures scheduled runs with clear PR behavior.
+1. Create a folder at repo root (example: `my-new-skill/`).
+2. Add `my-new-skill/SKILL.md` with `name` and `description` frontmatter.
+3. Add the core sections listed above.
+4. Add `my-new-skill/references/` if reusable support docs are needed.
+5. Link reference files from `SKILL.md` with relative paths.
 
-### Example 2: use your new skill
+## Use a skill in OpenClaw
 
-After creating `my-new-skill/SKILL.md`, call it in OpenClaw by its `name` from frontmatter and pass the required inputs you defined in that file.
+Invoke the skill by its frontmatter `name` and provide all required inputs defined in `SKILL.md`.
 
-## Authoring tips
+## Repository example
 
-- Keep one skill per folder.
-- Prefer explicit checklists over vague guidance.
-- Include references/templates when the workflow has repeated structure.
-- Define what “done” looks like in the required outcome section.
+`scheduled-repo-worker/` is the canonical example in this repo:
+
+- `scheduled-repo-worker/SKILL.md`
+- `scheduled-repo-worker/references/question-flow.md`
+- `scheduled-repo-worker/references/project-memory-templates.md`
+- `scheduled-repo-worker/references/task-engine-notes.md`
